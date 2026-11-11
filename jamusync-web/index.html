@@ -266,6 +266,44 @@ tbody tr.click:active td{background:var(--panel)}
 .avatar{position:relative;overflow:hidden}
 .avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
 .mk-card .avatar{position:absolute}
+/* Real maker story (Mas Yudi) */
+.ym-card{appearance:none;border:0;width:100%;display:flex;align-items:center;gap:14px;background:var(--white);border-radius:20px;padding:12px 14px;box-shadow:var(--shadow);font:inherit;color:inherit;cursor:pointer;text-align:left}
+.ym-card:active{transform:scale(.99)}
+.ym-ring{flex:none;width:58px;height:58px;border-radius:50%;padding:3px;background:conic-gradient(#E9B66B,#D1862A,#8A5A3B,#E9B66B);display:flex}
+.ym-av{flex:1;border-radius:50%;background:linear-gradient(145deg,#5A3523,#2A180F);color:#F3DDB6;font:600 24px/1 var(--display);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff}
+.ym-av.sm{flex:none;width:38px;height:38px;font-size:17px;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.ym-play{margin-left:auto;flex:none;width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center}
+.ym{position:fixed;inset:0;z-index:90;background:rgba(15,9,5,.75);display:flex;justify-content:center;animation:fade .2s ease-out}
+.ym-in{position:relative;width:100%;max-width:440px;height:100%;color:#FBF4E8;background:radial-gradient(120% 70% at 85% 0%,rgba(233,182,107,.28),transparent 60%),linear-gradient(165deg,#5A3523 0%,#3B2316 50%,#1E120A 100%);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 20px calc(18px + env(safe-area-inset-bottom,0px));overflow:hidden;animation:pop .22s ease-out}
+.ym-in[data-bg="1"]::before{content:"";position:absolute;inset:0;background:var(--bg) center/cover;opacity:.32;filter:saturate(1.1)}
+.ym-in[data-bg="1"]::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,18,10,.55),rgba(30,18,10,.85) 55%,#1E120A)}
+.ym-in>*{position:relative;z-index:2}
+.ym-bars{display:flex;gap:4px}
+.ym-bars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.25)}
+.ym-bars i.done,.ym-bars i.on{background:#fff}
+.ym-top{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px}
+.ym-meta{font-size:12px;opacity:.75}
+.ym-x{appearance:none;border:0;background:rgba(255,255,255,.12);color:#fff;width:38px;height:38px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer;z-index:4}
+.ym-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:10px 4px}
+.ym-ey{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#E9B66B}
+.ym-big{font:600 40px/1.05 var(--display);letter-spacing:-.01em;text-wrap:balance}
+.ym-en{font-size:16px;line-height:1.55;color:#EBDCC9}
+.ym-q{font:500 27px/1.25 var(--display);text-wrap:balance}
+.ym-id{font-size:13.5px;font-style:italic;color:#CDB9A0;line-height:1.5}
+.ym-listen{appearance:none;border:0;align-self:flex-start;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);color:#fff;border-radius:50px;padding:6px 18px 6px 6px;font:700 14px var(--font);cursor:pointer;margin-top:6px;z-index:4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.ym-pb{width:46px;height:46px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(209,134,42,.45)}
+.ym-wave{display:flex;align-items:center;gap:3px;height:22px}
+.ym-wave i{width:3px;height:40%;border-radius:2px;background:#E9B66B}
+.ym-wave i:nth-child(3n){height:85%}.ym-wave i:nth-child(4n){height:60%}
+.ym-listen.on .ym-wave i{animation:pulse 1s ease-in-out infinite}.ym-listen.on .ym-wave i:nth-child(odd){animation-delay:.3s}
+.ym-foot{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:12.5px;color:#CDB9A0;z-index:4}
+.ym-link{appearance:none;border:0;background:none;color:#EBDCC9;font:600 14px var(--font);text-decoration:underline;cursor:pointer}
+.ym-note{font-size:11px;opacity:.7;text-align:center}
+.ym-nav{position:absolute!important;top:90px;bottom:120px;width:42%;background:transparent;border:0;cursor:pointer;z-index:1!important}
+.ym-nav.prev{left:0}.ym-nav.next{right:0}
+.ym-body{pointer-events:none}.ym-listen,.ym-body a,.ym-body button{pointer-events:auto}
+.ym-nav{z-index:3!important}.ym-top,.ym-foot{z-index:4!important}
+.ym-listen span:nth-child(2){white-space:nowrap}
 </style>
 </head>
 <body>
@@ -348,6 +386,22 @@ const PHOTO_FILES={
  'Sinom':'photos/sinom.png',
  'Beras Kencur Susu':'photos/beras-kencur-susu.png',
 };
+
+// ===================== Real maker story (Mas Yudi) =====================
+// Shown as a tap-through story when the app opens, and from the card on Home.
+// enabled:false hides it everywhere (use this if consent is withdrawn, and delete yudi.mp3).
+// audio: file next to index.html. Slides without audio show text only.
+const REAL_MAKER={enabled:true,name:'Mas Yudi',initial:'Y',place:'Solo',since:2014,
+ slides:[
+  {kind:'intro',audio:'yudi.mp3',audioLabel:'Hear him introduce himself',
+   en:'My name is Yudi. I study Traditional Medicine in Solo, and I have been preserving jamu since 2014, when I felt called to try something I didn’t even like, because of its taste.'},
+  {kind:'quote',en:'Jamu is not just a bitter drink. Jamu is the identity of our nation.',
+   id:'Jamu itu tidak hanya sekadar minuman rasa pahit, tetapi jamu itu sebenarnya adalah identitas bangsa kita sendiri.'},
+  {kind:'quote',bg:'photos/kunyit-asam.png',title:'Why is kunyit asam made with tamarind?',
+   en:'Our ancestors never explained it. Today science does: the curcumin in turmeric breaks down easily, and stays stable when it is mixed with tamarind.',
+   id:'Nenek moyang kita tidak memberikan informasi kenapa, tetapi sains menjawab saat ini.'},
+  {kind:'end',en:'Jamu is not old-fashioned. It is an extraordinary heritage from our ancestors.',
+   id:'Jamu tidak kuno. Jamu itu adalah warisan budaya yang luar biasa.'}]};
 </script>
 <script>
 (()=>{
@@ -562,7 +616,7 @@ SCREENS['home']=()=>{const ini=m=>esc(m.name.replace(/^(Bu|Pak|Mbak|Mas) /,'')[0
   return `<button class="mk-card" data-go="maker-${m.id}"><div class="cover" style="background:${COV[i%3]}"><div class="avatar">${avIn(m)}</div>${m.sample?'<span class="tag sample" style="position:absolute;right:10px;top:10px;background:rgba(255,255,255,.9)">Sample</span>':''}</div><div class="body"><div class="name">${esc(m.name)}</div><div class="muted">${esc(m.area)} · since ${m.since}</div><div class="stat" style="padding-top:6px"><span>${n} jamu</span><span style="color:var(--dot)">•</span><span>${subs} langganan</span></div></div></button>`;}).join('');
  const hp=activeProducts(1)[0];
  return buyer('home',topHome(),`<div class="stack pad" style="--g:26px;padding-top:4px">
- <div><div class="muted" style="font-size:13.5px">${greet()} 👋</div><h1 class="guest-title" style="font-size:27px;padding-top:2px">What jamu are you<br>craving today?</h1></div>
+ ${REAL_MAKER.enabled?`<button class="ym-card" data-act="yudi" aria-label="Open Mas Yudi's story"><span class="ym-ring"><span class="ym-av">${REAL_MAKER.initial}</span></span><span class="stack" style="--g:2px;text-align:left"><span class="eyebrow">A real jamu maker</span><span style="font-weight:800;font-size:15.5px">${esc(REAL_MAKER.name)} · ${esc(REAL_MAKER.place)}</span><span class="muted">Tap to hear his story</span></span><span class="ym-play">${ICO.play}</span></button>`:''}<div><div class="muted" style="font-size:13.5px">${greet()} 👋</div><h1 class="guest-title" style="font-size:27px;padding-top:2px">What jamu are you<br>craving today?</h1></div>
  <section class="hero"><div class="eyebrow">MADE THIS MORNING</div><h1>Fresh jamu from a maker near you.</h1><p>Order once, or start a langganan on the days you choose.</p><div class="art">${hp?pic(hp,200,0):''}</div><button class="btn orange" data-go="langganan-new">Start a langganan</button></section>
  <section class="stack" style="--g:12px"><div class="section-h"><h2>Makers near you</h2><span class="muted">${MAKERS.length} makers</span></div><div class="pills" style="gap:14px;padding-bottom:16px">${makers}</div></section>
  <section class="stack" style="--g:12px"><div class="section-h"><h2>Fresh this morning</h2><button class="btn sec small" data-go="maker-1">See all</button></div><div class="pills" style="gap:12px;padding-bottom:16px">${activeProducts(1).slice(0,6).map(p=>`<button class="prod-card" data-go="story-${p.id}">${pic(p,110,14)}<div style="padding:2px 6px 6px"><div style="font-weight:700;font-size:13.5px">${esc(p.name)}</div><div class="detail-price" style="font-size:13px;color:var(--orange)">${rp(p.price)}</div></div></button>`).join('')}</div></section>
@@ -921,6 +975,7 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-go],[data
  if(el.dataset.go){S.navCount=(S.navCount||0)+1;go(el.dataset.go);return;}
  const a=el.dataset.act,id=el.dataset.id;
  switch(a){
+  case 'yudi':openYudi();break;
   case 'guide':openGuide();break;
   case 'back-dash':go(dash());break;
   case 'add-cart':{const p=P(+id);addCart(p.id,p.name,p.price);flash(el.dataset.fk||'p'+p.id);render(true);toast(`${p.name} added to cart`);break;}
@@ -984,9 +1039,41 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-go],[data
    x.status=st;render(true);alertFx({header:'Updated',body:`Transaction marked as ${st}.`});break;}
  }});
 
+
+// ===================== Real maker story overlay =====================
+let ymAudio=null;
+function closeYudi(){const o=document.querySelector('.ym');if(ymAudio){ymAudio.pause();ymAudio=null;}if(o)o.remove();}
+function openYudi(start=0){if(!REAL_MAKER.enabled)return;closeYudi();stopVoice();const R=REAL_MAKER,N=R.slides.length;let i=start;
+ const o=document.createElement('div');o.className='ym';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label',R.name+"'s story");
+ const draw=()=>{if(ymAudio){ymAudio.pause();ymAudio=null;}const sl=R.slides[i];
+  o.innerHTML=`<div class="ym-in" style="${sl.bg?`--bg:url('${sl.bg}')`:''}" data-bg="${sl.bg?1:0}">
+   <div class="ym-bars">${R.slides.map((_,k)=>`<i class="${k<i?'done':k===i?'on':''}"></i>`).join('')}</div>
+   <div class="ym-top"><span class="ym-av sm">${R.initial}</span><div class="grow"><b>${esc(R.name)}</b><div class="ym-meta">Jamu maker · ${esc(R.place)} · since ${R.since}</div></div><button class="ym-x" data-ym="close" aria-label="Close">×</button></div>
+   <div class="ym-body">
+    ${sl.kind==='intro'?`<div class="ym-ey">Every bottle has a story</div><div class="ym-big">Meet ${esc(R.name)}</div><p class="ym-en">“${esc(sl.en)}”</p>`:''}
+    ${sl.kind==='quote'?`${sl.title?`<div class="ym-ey">${esc(sl.title)}</div>`:'<div class="ym-ey">In his words</div>'}<p class="ym-q">“${esc(sl.en)}”</p>${sl.id?`<p class="ym-id">${esc(sl.id)}</p>`:''}`:''}
+    ${sl.kind==='end'?`<p class="ym-q">“${esc(sl.en)}”</p>${sl.id?`<p class="ym-id">${esc(sl.id)}</p>`:''}<div class="ym-big" style="font-size:30px;margin-top:10px">Every bottle has a story.</div>`:''}
+    ${sl.audio?`<button class="ym-listen" data-ym="play"><span class="ym-pb">${ICO.play}</span><span>${esc(sl.audioLabel||'Hear his voice')}</span><span class="ym-wave">${'<i></i>'.repeat(12)}</span></button>`:''}
+   </div>
+   <div class="ym-foot">${sl.kind==='end'?`<button class="btn orange block" data-ym="close">Explore JamuSync</button><button class="ym-link" data-ym="restart">Watch again</button>`:`<span>Tap the right side for next</span>`}
+    <div class="ym-note">Real maker, shared with his permission. Voice only.</div></div>
+   <button class="ym-nav prev" data-ym="prev" aria-label="Previous"></button><button class="ym-nav next" data-ym="next" aria-label="Next"></button>
+  </div>`;};
+ o.addEventListener('click',e=>{const b=e.target.closest('[data-ym]');if(!b)return;const k=b.dataset.ym;
+  if(k==='close'){try{sessionStorage.setItem('ym-seen','1');}catch(_){}closeYudi();}
+  else if(k==='next'){if(i<N-1){i++;draw();}}
+  else if(k==='prev'){if(i>0){i--;draw();}}
+  else if(k==='restart'){i=0;draw();}
+  else if(k==='play'){const sl=R.slides[i];if(ymAudio&&!ymAudio.paused){ymAudio.pause();b.classList.remove('on');return;}
+   ymAudio=new Audio(sl.audio);b.classList.add('on');ymAudio.play().catch(()=>{b.classList.remove('on');toast('Could not play the audio');});ymAudio.onended=()=>b.classList.remove('on');}});
+ document.addEventListener('keydown',function k(e){if(!document.body.contains(o)){document.removeEventListener('keydown',k);return;}if(e.key==='Escape')o.querySelector('[data-ym="close"]').click();if(e.key==='ArrowRight'&&i<N-1){i++;draw();}if(e.key==='ArrowLeft'&&i>0){i--;draw();}});
+ draw();document.body.appendChild(o);}
+
 // ===================== start =====================
 if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
-const start=location.hash.slice(1)||'home';const [n0]=parse(start);
+let start=location.hash.slice(1)||'home';let ymNow=false;if(start==='yudi'){start='home';ymNow=true;}
+let ymSeen=false;try{ymSeen=sessionStorage.getItem('ym-seen')==='1';}catch(_){}
+if(REAL_MAKER.enabled&&(ymNow||(start==='home'&&!ymSeen)))setTimeout(()=>openYudi(),ymNow?150:700);const [n0]=parse(start);
 if(!allowed(n0)){S.afterLogin=start;cur='signin';history.replaceState(null,'','#signin');render(false);}else{cur=n0;curArg=parse(start)[1];history.replaceState(null,'','#'+start);render(false);}
 })();
 
