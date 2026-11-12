@@ -304,6 +304,8 @@ tbody tr.click:active td{background:var(--panel)}
 .ym-body{pointer-events:none}.ym-listen,.ym-body a,.ym-body button{pointer-events:auto}
 .ym-nav{z-index:3!important}.ym-top,.ym-foot{z-index:4!important}
 .ym-listen span:nth-child(2){white-space:nowrap}
+.ym-hint{font-size:12.5px;color:#E9B66B;margin-top:-4px}
+.ym-native{width:100%;height:40px;pointer-events:auto;margin-top:2px;filter:sepia(.25)}
 </style>
 </head>
 <body>
@@ -1043,7 +1045,8 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-go],[data
 // ===================== Real maker story overlay =====================
 let ymAudio=null;
 function closeYudi(){const o=document.querySelector('.ym');if(ymAudio){ymAudio.pause();ymAudio=null;}if(o)o.remove();}
-function openYudi(start=0){if(!REAL_MAKER.enabled)return;closeYudi();stopVoice();const R=REAL_MAKER,N=R.slides.length;let i=start;
+let ymSound=false;
+function openYudi(start=0){if(!REAL_MAKER.enabled)return;closeYudi();stopVoice();const R=REAL_MAKER,N=R.slides.length;let i=start;const autoPlay=()=>{const sl=R.slides[i];if(!ymSound||!sl.audio)return;const b=o.querySelector('[data-ym="play"]');ymAudio=o.querySelector('.ym-native');if(!ymAudio)return;if(b)b.classList.add('on');ymAudio.currentTime=0;ymAudio.play().catch(()=>{if(b)b.classList.remove('on');});ymAudio.onended=()=>{if(b)b.classList.remove('on');};};
  const o=document.createElement('div');o.className='ym';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label',R.name+"'s story");
  const draw=()=>{if(ymAudio){ymAudio.pause();ymAudio=null;}const sl=R.slides[i];
   o.innerHTML=`<div class="ym-in" style="${sl.bg?`--bg:url('${sl.bg}')`:''}" data-bg="${sl.bg?1:0}">
@@ -1053,7 +1056,7 @@ function openYudi(start=0){if(!REAL_MAKER.enabled)return;closeYudi();stopVoice()
     ${sl.kind==='intro'?`<div class="ym-ey">Every bottle has a story</div><div class="ym-big">Meet ${esc(R.name)}</div><p class="ym-en">“${esc(sl.en)}”</p>`:''}
     ${sl.kind==='quote'?`${sl.title?`<div class="ym-ey">${esc(sl.title)}</div>`:'<div class="ym-ey">In his words</div>'}<p class="ym-q">“${esc(sl.en)}”</p>${sl.id?`<p class="ym-id">${esc(sl.id)}</p>`:''}`:''}
     ${sl.kind==='end'?`<p class="ym-q">“${esc(sl.en)}”</p>${sl.id?`<p class="ym-id">${esc(sl.id)}</p>`:''}<div class="ym-big" style="font-size:30px;margin-top:10px">Every bottle has a story.</div>`:''}
-    ${sl.audio?`<button class="ym-listen" data-ym="play"><span class="ym-pb">${ICO.play}</span><span>${esc(sl.audioLabel||'Hear his voice')}</span><span class="ym-wave">${'<i></i>'.repeat(12)}</span></button>`:''}
+    ${sl.audio?`<button class="ym-listen" data-ym="play"><span class="ym-pb">${ICO.play}</span><span>${esc(sl.audioLabel||'Hear his voice')}</span><span class="ym-wave">${'<i></i>'.repeat(12)}</span></button><audio class="ym-native" controls playsinline preload="auto" src="${sl.audio}"></audio>${i===0?'<div class="ym-hint">\u{1F50A} Turn your sound on, then tap play</div>':''}`:''}
    </div>
    <div class="ym-foot">${sl.kind==='end'?`<button class="btn orange block" data-ym="close">Explore JamuSync</button><button class="ym-link" data-ym="restart">Watch again</button>`:`<span>Tap the right side for next</span>`}
     <div class="ym-note">Real maker, shared with his permission. Voice only.</div></div>
@@ -1061,12 +1064,13 @@ function openYudi(start=0){if(!REAL_MAKER.enabled)return;closeYudi();stopVoice()
   </div>`;};
  o.addEventListener('click',e=>{const b=e.target.closest('[data-ym]');if(!b)return;const k=b.dataset.ym;
   if(k==='close'){try{sessionStorage.setItem('ym-seen','1');}catch(_){}closeYudi();}
-  else if(k==='next'){if(i<N-1){i++;draw();}}
-  else if(k==='prev'){if(i>0){i--;draw();}}
-  else if(k==='restart'){i=0;draw();}
+  else if(k==='next'){if(!ymSound&&R.slides[i].audio&&i===0){ymSound=true;autoPlay();return;}if(i<N-1){i++;draw();autoPlay();}}
+  else if(k==='prev'){if(i>0){i--;draw();autoPlay();}}
+  else if(k==='restart'){i=0;draw();autoPlay();}
   else if(k==='play'){const sl=R.slides[i];if(ymAudio&&!ymAudio.paused){ymAudio.pause();b.classList.remove('on');return;}
-   ymAudio=new Audio(sl.audio);b.classList.add('on');ymAudio.play().catch(()=>{b.classList.remove('on');toast('Could not play the audio');});ymAudio.onended=()=>b.classList.remove('on');}});
+   ymSound=true;ymAudio=o.querySelector('.ym-native');b.classList.add('on');ymAudio.play().catch(()=>{b.classList.remove('on');toast('Could not play the audio');});ymAudio.onended=()=>b.classList.remove('on');}});
  document.addEventListener('keydown',function k(e){if(!document.body.contains(o)){document.removeEventListener('keydown',k);return;}if(e.key==='Escape')o.querySelector('[data-ym="close"]').click();if(e.key==='ArrowRight'&&i<N-1){i++;draw();}if(e.key==='ArrowLeft'&&i>0){i--;draw();}});
+ o.addEventListener('play',e=>{if(e.target.classList.contains('ym-native')){ymSound=true;ymAudio=e.target;const b=o.querySelector('[data-ym="play"]');if(b)b.classList.add('on');}},true);o.addEventListener('pause',e=>{const b=o.querySelector('[data-ym="play"]');if(b)b.classList.remove('on');},true);
  draw();document.body.appendChild(o);}
 
 // ===================== start =====================
